@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .responsive-container {
   max-width: 100%;
   width: 300px; /* Adjust this based on your design */
