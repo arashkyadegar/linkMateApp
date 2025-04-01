@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import PersianDatePicker from "../PersianDatePicker";
+import axios from "axios";
+import { ToastSuccess, ToastFail } from "../Toast/ToastAlert";
 
 const PasswordProtectedLinkCreateForm = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +9,8 @@ const PasswordProtectedLinkCreateForm = () => {
     shortCode: "",
     password: "",
     confirmPassword: "",
+    isSingleUse: false,
+    expirationDate: "",
     createdAt: null, // Set by PersianDatePicker
   });
   const [errors, setErrors] = useState({}); // Tracks validation errors for each field
@@ -15,32 +19,13 @@ const PasswordProtectedLinkCreateForm = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  const handleDateChange = (selectedDate) => {
+    console.log(selectedDate)
+    setFormData({ ...formData, expirationDate: selectedDate });
+  };
 
-  const validateForm = () => {
+  const validateFields = () => {
     const errors = {};
-    const passwordRegex =
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    const shortCodeRegex = /^[a-zA-Z0-9]{6,12}$/;
-
-    // Validate shortCode
-    if (formData.shortCode && !shortCodeRegex.test(formData.shortCode)) {
-      errors.shortCode = "Short Code must be 6-12 alphanumeric characters.";
-    }
-
-    // Validate password
-    if (!formData.password) {
-      errors.password = "Password is required.";
-    } else if (!passwordRegex.test(formData.password)) {
-      errors.password =
-        "Password must be at least 8 characters, include one letter, one number, and one special character.";
-    }
-
-    // Validate confirmPassword
-    if (!formData.confirmPassword) {
-      errors.confirmPassword = "Please confirm your password.";
-    } else if (formData.password !== formData.confirmPassword) {
-      errors.confirmPassword = "Passwords do not match.";
-    }
 
     setErrors(errors);
     return Object.keys(errors).length === 0; // Return true if no errors
@@ -50,18 +35,52 @@ const PasswordProtectedLinkCreateForm = () => {
       originalUrl: "",
       shortCode: "",
       password: "",
+      isSingleUse: false,
       confirmPassword: "",
+      expirationDate: "",
       createdAt: null, // Set by PersianDatePicker
     });
     setErrors({});
     setShortenedData(null);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (validateFields()) {
+      const data = {
+        userId: "",
+        originalUrl: formData.originalUrl,
+        shortCode: formData.customShortlink,
+        visitCount: 0,
+        passwordHash: formData.password,
+        isSingleUse: formData.isSingleUse,
+        expirationDate: formData.expirationDate,
+        isUsed: false,
+      };
+      try {
+        console.log(data)
+        const response = await axios.post(
+          "http://localhost:3000/password-links/",
+          data,
+          {
+            withCredentials: true,
+          }
+        );
 
-    if (validateForm()) {
-      alert("Shortlink created!");
-      console.log("Form data:", formData); // Replace with actual submission logic
+        if (response.status == "201") {
+          setShortenedData({
+            link:
+              import.meta.env.VITE_SERVERURL_SHORTLINK +
+              "/passwordlink/" +
+              response.data.shortCode,
+          });
+          ToastSuccess("Success! The link has been created.");
+        }
+
+        setErrors({});
+      } catch (error) {
+        ToastFail(error.response.status);
+        console.error("Error submitting data:", error);
+      }
     }
   };
 
@@ -168,9 +187,25 @@ const PasswordProtectedLinkCreateForm = () => {
             >
               Date-Time
             </label>
-            <PersianDatePicker />
+            <PersianDatePicker onDateChange={handleDateChange} />
           </div>
-
+          {/* Single Use Checkbox */}
+          <div className="flex items-center">
+            <input
+              id="isSingleUse"
+              name="isSingleUse"
+              type="checkbox"
+              checked={formData.isSingleUse}
+              onChange={handleChange}
+              className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600"
+            />
+            <label
+              htmlFor="isSingleUse"
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
+              Make it single use
+            </label>
+          </div>
           {/* Submit Button */}
           <div className="flex justify-end gap-2">
             <button
