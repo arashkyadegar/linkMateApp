@@ -14,16 +14,17 @@ import NotAllowed from "./components/Layout/NotAllowed";
 import ShortLinkList from "./components/ShortLink/ShortLinkList";
 import ProtectedRoute from "./components/protected-route/protected-route";
 import AuthProvider from "./components/hooks/AuthProvider";
-import RedirectComponent from "./components/Redirect/Redirect";
+import ShortLinkRedirect from "./components/Redirect/shortLinkRedirect";
 import ShortPasswordProtectedLinkList from "./components/PasswordProtectedLink/PasswordProtectedLinkList";
-
+import PasswordLinkRedirect from "./components/Redirect/PasswordLinkRedirect";
 createRoot(document.getElementById("root")).render(
   <Router>
     <DarkModeProvider>
       <Toaster />
       <AuthProvider>
         <Routes>
-          <Route path="url/:id" element={<RedirectComponent />} />
+          <Route path="url/:id" element={<ShortLinkRedirect />} />
+          <Route path="psw-url/:id" element={<PasswordLinkRedirect />} />
           <Route path="/" element={<Layout />}>
             <Route path="not-allowed" element={<NotAllowed />} />
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-const RedirectComponent = () => {
+const ShortLinkRedirect = () => {
   const { id } = useParams();
   const [originalUrl, setOriginalUrl] = useState(null);
   const [status, setStatus] = useState(null);
@@ -73,4 +73,4 @@ const RedirectComponent = () => {
   );
 };
 
-export default RedirectComponent;
+export default ShortLinkRedirect;
