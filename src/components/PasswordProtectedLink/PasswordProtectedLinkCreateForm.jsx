@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PersianDatePicker from "../PersianDatePicker";
 import axios from "axios";
 import { ToastSuccess, ToastFail } from "../Toast/ToastAlert";
-
+import ShortenedPasswordLink from "./shortendPasswordProtectedLink";
 const PasswordProtectedLinkCreateForm = () => {
   const [formData, setFormData] = useState({
     originalUrl: "",
@@ -14,6 +14,7 @@ const PasswordProtectedLinkCreateForm = () => {
     createdAt: null, // Set by PersianDatePicker
   });
   const [errors, setErrors] = useState({}); // Tracks validation errors for each field
+  const [shortenedData, setShortenedData] = useState(null); // Manage the visibility of ShortenedLink
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -48,38 +49,41 @@ const PasswordProtectedLinkCreateForm = () => {
       const data = {
         userId: "",
         originalUrl: formData.originalUrl,
-        shortCode: formData.customShortlink,
+        shortCode: formData.shortCode,
         visitCount: 0,
         passwordHash: formData.password,
         isSingleUse: formData.isSingleUse,
         expirationDate: new Date(formData.expirationDate).toISOString(),
         isUsed: false,
       };
-      try {
-        console.log(data);
-        const response = await axios.post(
-          "http://localhost:3000/password-links/",
-          data,
-          {
-            withCredentials: true,
-          }
-        );
-
-        if (response.status == "201") {
-          setShortenedData({
-            link:
-              import.meta.env.VITE_SERVERURL_SHORTLINK +
-              "/passwordlink/" +
-              response.data.shortCode,
-          });
-          ToastSuccess("Success! The link has been created.");
+      // try {
+      const response = await axios.post(
+        "http://localhost:3000/password-links/",
+        data,
+        {
+          withCredentials: true,
         }
-
-        setErrors({});
-      } catch (error) {
-        ToastFail(error.response.status);
-        console.error("Error submitting data:", error);
+      );
+      if (response.status == "201") {
+        setShortenedData({
+          link:
+            import.meta.env.VITE_SERVERURL_PASSWORDLINK +
+            "/passwordlink/" +
+            response.data.shortCode,
+        });
+        ToastSuccess("Success! The link has been created.");
       }
+
+      setErrors({});
+      // } catch (error) {
+      //   if (error.response) {
+      //     ToastFail(error.response.status); // Access response status safely
+      //     console.error("Error submitting data:", error.response);
+      //   } else {
+      //     ToastFail("An unexpected error occurred"); // Handle undefined response
+      //     console.error("Error:", error.message);
+      //   }
+      // }
     }
   };
 
@@ -225,6 +229,15 @@ const PasswordProtectedLinkCreateForm = () => {
             </button>
           </div>
         </form>
+        {/* Conditionally Render ShortenedLink */}
+        {shortenedData && (
+          <div className="mt-8">
+            <ShortenedPasswordLink
+              link={shortenedData.link}
+              qrCode={shortenedData.qrCode}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

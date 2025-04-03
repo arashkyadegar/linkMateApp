@@ -1,5 +1,5 @@
 import React from "react";
-import { createRoot } from 'react-dom/client';
+import { createRoot } from "react-dom/client";
 import "./index.css";
 import LoginPage from "./components/LoginPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -15,9 +15,9 @@ import ShortLinkList from "./components/ShortLink/ShortLinkList";
 import ProtectedRoute from "./components/protected-route/protected-route";
 import AuthProvider from "./components/hooks/AuthProvider";
 import RedirectComponent from "./components/Redirect/Redirect";
+import ShortPasswordProtectedLinkList from "./components/PasswordProtectedLink/PasswordProtectedLinkList";
 
-createRoot(document.getElementById('root')).render(
-
+createRoot(document.getElementById("root")).render(
   <Router>
     <DarkModeProvider>
       <Toaster />
@@ -51,6 +51,15 @@ createRoot(document.getElementById('root')).render(
             />
 
             <Route
+              path="/password-protected-link-list"
+              element={
+                <ProtectedRoute>
+                  <ShortPasswordProtectedLinkList />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
               path="/auto-expire-link"
               element={
                 <ProtectedRoute>
@@ -63,5 +72,4 @@ createRoot(document.getElementById('root')).render(
       </AuthProvider>
     </DarkModeProvider>
   </Router>
-
-)
+);

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import DarkModeToggle from "./darkmode/darkmodeToggle";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../components/hooks/AuthProvider"
+import { useAuth } from "../components/hooks/AuthProvider";
 const CustomHamburgerMenu = () => {
-    const auth = useAuth();
+  const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const doNavigate = (link) => {
@@ -124,7 +124,15 @@ const CustomHamburgerMenu = () => {
                 Password-Protected-Link
               </a>
             </li>
-
+            <li>
+              <a
+                href="#"
+                onClick={() => doNavigate("/password-protected-link-list")}
+                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                password-protected-Link-List
+              </a>
+            </li>
             <li>
               <a
                 onClick={() => doNavigate("auto-expire-link")}
@@ -141,7 +149,7 @@ const CustomHamburgerMenu = () => {
                 href="#"
                 className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
               >
-             Log-Out
+                Log-Out
               </a>
             </li>
           </ul>

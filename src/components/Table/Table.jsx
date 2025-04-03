@@ -29,7 +29,7 @@ const TableRTL = ({ list = [] }) => {
           </thead>
           <tbody>
             {list.map((item, index) => (
-              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <tr key={item._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {item.originalUrl}{" "}
                 </td>
@@ -57,21 +57,7 @@ const TableRTL = ({ list = [] }) => {
             Previous
           </button> */}
 
-          <div className="flex space-x-1">
-            <button className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-              1
-            </button>
-            <button className="px-3 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
-              2
-            </button>
-            <button className="px-3 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
-              3
-            </button>
-            <span className="px-3 py-2 text-gray-700">...</span>
-            <button className="px-3 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
-              10
-            </button>
-          </div>
+
 
           {/* <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">
             Next
