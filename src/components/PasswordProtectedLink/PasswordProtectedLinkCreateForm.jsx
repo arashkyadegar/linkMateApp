@@ -20,7 +20,6 @@ const PasswordProtectedLinkCreateForm = () => {
     setFormData({ ...formData, [name]: value });
   };
   const handleDateChange = (selectedDate) => {
-    console.log(selectedDate)
     setFormData({ ...formData, expirationDate: selectedDate });
   };
 
@@ -57,7 +56,7 @@ const PasswordProtectedLinkCreateForm = () => {
         isUsed: false,
       };
       try {
-        console.log(data)
+        console.log(data);
         const response = await axios.post(
           "http://localhost:3000/password-links/",
           data,
@@ -187,7 +186,10 @@ const PasswordProtectedLinkCreateForm = () => {
             >
               Date-Time
             </label>
-            <PersianDatePicker onDateChange={handleDateChange} />
+            <PersianDatePicker
+              selectedDate={formData.expirationDate} // Pass the selected date state
+              onDateChange={handleDateChange} // Handle date change
+            />
           </div>
           {/* Single Use Checkbox */}
           <div className="flex items-center">
