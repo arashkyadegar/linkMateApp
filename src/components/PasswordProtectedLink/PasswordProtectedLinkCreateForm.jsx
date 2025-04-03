@@ -10,7 +10,7 @@ const PasswordProtectedLinkCreateForm = () => {
     password: "",
     confirmPassword: "",
     isSingleUse: false,
-    expirationDate: "",
+    expirationDate: new Date(),
     createdAt: null, // Set by PersianDatePicker
   });
   const [errors, setErrors] = useState({}); // Tracks validation errors for each field
@@ -52,7 +52,7 @@ const PasswordProtectedLinkCreateForm = () => {
         visitCount: 0,
         passwordHash: formData.password,
         isSingleUse: formData.isSingleUse,
-        expirationDate: formData.expirationDate,
+        expirationDate: new Date(formData.expirationDate).toISOString(),
         isUsed: false,
       };
       try {
