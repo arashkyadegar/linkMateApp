@@ -24,6 +24,22 @@ const ShortLinkList = () => {
       console.error("Error submitting data:", error);
     }
   };
+
+  const nextpage = async (page) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/short-links/findbyuserid?page=${page}`,
+        {
+          withCredentials: true,
+        }
+      );
+      setLinkList(response.data);
+    } catch (error) {
+      // ToastFail(error.response.status);
+      console.error("Error submitting data:", error);
+    }
+  };
+
   return (
     <div className="bg-gray-50 dark:bg-gray-900 py-10 px-4" dir="rtl">
       <div className="w-full max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -36,7 +52,7 @@ const ShortLinkList = () => {
             <PaginationComponent
               total={linkList.totalCount}
               page={linkList.page}
-              onClick={() => console.log}
+              onClick={nextpage}
             />
           </div>
         </div>

@@ -18,7 +18,6 @@ const ShortPasswordProtectedLinkList = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
       setLinkList(response.data);
     } catch (error) {
       // ToastFail(error.response.status);

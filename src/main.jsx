@@ -64,7 +64,7 @@ createRoot(document.getElementById("root")).render(
               path="/auto-expire-link"
               element={
                 <ProtectedRoute>
-                  element={<AutoExpreLinkCreateForm />}
+                  <AutoExpreLinkCreateForm />
                 </ProtectedRoute>
               }
             />
