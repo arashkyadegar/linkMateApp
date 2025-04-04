@@ -21,6 +21,7 @@ const ShortLinkRedirect = () => {
       setIsLoading(false);
     }
   };
+  
   useEffect(() => {
     fetchShortLink();
   }, []);
