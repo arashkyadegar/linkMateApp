@@ -45,6 +45,10 @@ const PasswordProtectedLinkCreateForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (formData.expirationDate == "") {
+    }
+
     if (validateFields()) {
       const data = {
         userId: "",
@@ -53,7 +57,9 @@ const PasswordProtectedLinkCreateForm = () => {
         visitCount: 0,
         passwordHash: formData.password,
         isSingleUse: formData.isSingleUse,
-        expirationDate: new Date(formData.expirationDate).toISOString(),
+        expirationDate: formData.expirationDate
+          ? new Date(formData.expirationDate).toISOString()
+          : null,
         isUsed: false,
       };
       // try {

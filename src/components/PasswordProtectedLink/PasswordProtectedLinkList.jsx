@@ -9,6 +9,22 @@ const ShortPasswordProtectedLinkList = () => {
   useEffect(() => {
     getAll();
   }, []);
+
+  const nextpage = async (page) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/password-links/findbyuserid?page=${page}`,
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+      setLinkList(response.data);
+    } catch (error) {
+      // ToastFail(error.response.status);
+      console.error("Error submitting data:", error);
+    }
+  };
   const getAll = async () => {
     try {
       const response = await axios.get(
@@ -36,7 +52,7 @@ const ShortPasswordProtectedLinkList = () => {
             <PaginationComponent
               total={linkList.totalCount}
               page={linkList.page}
-              onClick={() => console.log}
+              onClick={nextpage}
             />
           </div>
         </div>
