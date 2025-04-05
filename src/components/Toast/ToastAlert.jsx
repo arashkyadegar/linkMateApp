@@ -16,3 +16,8 @@ export const ToastFail = (message = "خطا در انجام عملیات!") => {
 export const ToastAuthFail = (message = "لطفا لاگین کنید") => {
   toast.error(message);
 };
+
+
+export const ToastConfilict = (message = "اطلاعات تکراری") => {
+  toast.error(message);
+};

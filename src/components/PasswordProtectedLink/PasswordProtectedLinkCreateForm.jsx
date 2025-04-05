@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PersianDatePicker from "../PersianDatePicker";
 import axios from "axios";
-import { ToastSuccess, ToastFail } from "../Toast/ToastAlert";
+import { ToastSuccess, ToastFail, ToastConfilict } from "../Toast/ToastAlert";
 import ShortenedPasswordLink from "./shortendPasswordProtectedLink";
 const PasswordProtectedLinkCreateForm = () => {
   const [formData, setFormData] = useState({
@@ -62,15 +62,24 @@ const PasswordProtectedLinkCreateForm = () => {
           : null,
         isUsed: false,
       };
-      // try {
-      const response = await axios.post(
-        "http://localhost:3000/password-links/",
-        data,
-        {
-          withCredentials: true,
-        }
-      );
-      if (response.status == "201") {
+      try {
+        const response = await axios
+          .post("http://localhost:3000/password-links/", data, {
+            withCredentials: true,
+          })
+          .catch((error) => {
+            switch (error.status) {
+              case 409: {
+                ToastConfilict(error.message);
+                break;
+              }
+              case 400: {
+                ToastFail(error.message);
+                break;
+              }
+            }
+          });
+
         setShortenedData({
           link:
             import.meta.env.VITE_SERVERURL_PASSWORDLINK +
@@ -78,18 +87,17 @@ const PasswordProtectedLinkCreateForm = () => {
             response.data.shortCode,
         });
         ToastSuccess("Success! The link has been created.");
-      }
 
-      setErrors({});
-      // } catch (error) {
-      //   if (error.response) {
-      //     ToastFail(error.response.status); // Access response status safely
-      //     console.error("Error submitting data:", error.response);
-      //   } else {
-      //     ToastFail("An unexpected error occurred"); // Handle undefined response
-      //     console.error("Error:", error.message);
-      //   }
-      // }
+        setErrors({});
+      } catch (error) {
+        // if (error.response) {
+        //   ToastFail(error.response.message); // Access response status safely
+        //   console.error("Error submitting data:", error.response);
+        // } else {
+        //   ToastFail("An unexpected error occurred"); // Handle undefined response
+        //   console.error("Error:", error.message);
+        // }
+      }
     }
   };
 
