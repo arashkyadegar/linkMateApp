@@ -17,6 +17,7 @@ import AuthProvider from "./components/hooks/AuthProvider";
 import ShortLinkRedirect from "./components/Redirect/shortLinkRedirect";
 import ShortPasswordProtectedLinkList from "./components/PasswordProtectedLink/PasswordProtectedLinkList";
 import PasswordLinkRedirect from "./components/Redirect/PasswordLinkRedirect";
+import ShortLinkEditForm from "./components/ShortLink/ShortLinkEditForm";
 createRoot(document.getElementById("root")).render(
   <Router>
     <DarkModeProvider>
@@ -32,6 +33,15 @@ createRoot(document.getElementById("root")).render(
             <Route path="/login" element={<LoginPage />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/short-link" element={<ShortLinkCreateForm />} />
+
+            <Route
+              path="/short-link/:id"
+              element={
+                <ProtectedRoute>
+                  <ShortLinkEditForm />
+                </ProtectedRoute>
+              }
+            />
 
             <Route
               path="/short-link-list"

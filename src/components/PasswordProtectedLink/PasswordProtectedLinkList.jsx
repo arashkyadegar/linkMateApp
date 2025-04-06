@@ -46,7 +46,7 @@ const ShortPasswordProtectedLinkList = () => {
           password-protected Link List
         </h4>
         <div className="max-w-4xl">
-          <MyTable list={linkList.result} />
+          <MyTable list={linkList.result} editOne={() => {}} />
           <div className="flex flex-row-reverse gap-2 justify-center mt-6">
             <PaginationComponent
               total={linkList.totalCount}

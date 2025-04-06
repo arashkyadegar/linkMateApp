@@ -1,6 +1,6 @@
 import React from "react";
 
-const TableRTL = ({ list = [] }) => {
+const TableRTL = ({ list = [], deleteOne, editOne }) => {
   return (
     <div className="overflow-x-auto relative shadow-md sm:rounded-lg" dir="rtl">
       <div className="flex flex-col justify-end  my-4">
@@ -43,11 +43,20 @@ const TableRTL = ({ list = [] }) => {
                 </td>
                 <td className="px-6 py-4">{item.isUsed ? "Used" : "Not"}</td>
                 <td className="px-6 py-4 flex gap-4">
-
-                  <button className="font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                  <button
+                    onClick={() => {
+                      editOne(item._id);
+                    }}
+                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  >
                     Edit
                   </button>
-                  <button className="font-medium text-red-600 hover:underline">
+                  <button
+                    onClick={() => {
+                      deleteOne(item._id);
+                    }}
+                    className="font-medium text-red-600 hover:underline"
+                  >
                     Delete
                   </button>
                 </td>

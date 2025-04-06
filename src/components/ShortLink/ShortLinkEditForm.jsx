@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import ShortenedLink from "./shortendLink";
 import { ToastSuccess, ToastFail } from "../Toast/ToastAlert";
-
-const ShortLinkCreateForm = () => {
+import { useParams } from "react-router-dom";
+import { useEffect, useRef } from "react";
+const ShortLinkEditForm = () => {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
     originalUrl: "",
     customShortlink: "",
@@ -11,6 +13,33 @@ const ShortLinkCreateForm = () => {
   });
   const [errors, setErrors] = useState({});
   const [shortenedData, setShortenedData] = useState(null); // Manage the visibility of ShortenedLink
+  useEffect(() => {
+    fetchShortLink();
+  }, []);
+
+  const fetchShortLink = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/short-links/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      const { originalUrl, shortCode, isSingleUse } = response.data;
+
+      // Update the formData state with the fetched data
+      setFormData({
+        originalUrl: originalUrl || "",
+        customShortlink: shortCode || "",
+        isSingleUse: isSingleUse || false,
+      });
+    } catch (error) {
+      ToastFail(
+        error.response?.status || "An error occurred while fetching data."
+      );
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const handleReset = () => {
     setFormData({
@@ -44,15 +73,15 @@ const ShortLinkCreateForm = () => {
 
     try {
       // Make the API call
-      const response = await axios.post(
-        "http://localhost:3000/short-links/",
+      const response = await axios.put(
+        `http://localhost:3000/short-links/${id}`,
         data,
         {
           withCredentials: true, // Handle credentials (cookies, etc.)
         }
       );
-
-      if (response.status === 201) {
+      console.log(response.status);
+      if (response.status === 200) {
         // Set shortened link data
         setShortenedData({
           link:
@@ -157,13 +186,13 @@ const ShortLinkCreateForm = () => {
               type="button"
               className="px-6 py-2 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800"
             >
-             Reset
+              Reset
             </button>
             <button
               type="submit"
               className="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
             >
-              Create
+              Edit
             </button>
           </div>
         </form>
@@ -182,4 +211,4 @@ const ShortLinkCreateForm = () => {
   );
 };
 
-export default ShortLinkCreateForm;
+export default ShortLinkEditForm;
