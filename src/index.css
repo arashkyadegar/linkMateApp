@@ -1,7 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+body {
+  direction: ltr;
+}
+footer {
+  direction: ltr;
+  text-align: left;
+}
 .responsive-container {
   max-width: 100%;
   width: 300px; /* Adjust this based on your design */

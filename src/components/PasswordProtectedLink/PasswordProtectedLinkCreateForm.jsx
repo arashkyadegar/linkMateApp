@@ -102,9 +102,9 @@ const PasswordProtectedLinkCreateForm = () => {
   };
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 py-10 px-4" dir="rtl">
+    <div className="bg-gray-50 dark:bg-gray-900 py-10 px-4">
       <div className="w-full max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-        <h4 className="text-xl font-bold mb-6 text-gray-900 dark:text-white text-right">
+        <h4 className="text-xl font-bold mb-6 text-gray-900 dark:text-white text-left">
           Create New Password Protected Link
         </h4>
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -114,7 +114,7 @@ const PasswordProtectedLinkCreateForm = () => {
               htmlFor="original-url"
               className="sm:w-1/4 text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Original URL
+              Original URL <span className="text-red-600 text-lg">*</span>
             </label>
             <input
               type="url"
@@ -134,7 +134,7 @@ const PasswordProtectedLinkCreateForm = () => {
               htmlFor="shortlink"
               className="sm:w-1/4 text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Custom Shortlink (Optional)
+              Custom Shortlink
             </label>
             <input
               type="text"
@@ -156,7 +156,7 @@ const PasswordProtectedLinkCreateForm = () => {
               htmlFor="password"
               className="sm:w-1/4 text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Password
+              Password <span className="text-red-600 text-lg">*</span>
             </label>
             <input
               type="password"
@@ -179,7 +179,7 @@ const PasswordProtectedLinkCreateForm = () => {
               htmlFor="confirmPassword"
               className="sm:w-1/4 text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Confirm Password
+              Confirm Password <span className="text-red-600 text-lg">*</span>
             </label>
             <input
               type="password"

@@ -6,10 +6,10 @@ const FooterSection = () => {
   return (
     <footer
       className="bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200 py-12 px-6"
-      dir="rtl" // Enables Right-to-Left alignment
+       // Enables Right-to-Left alignment
     >
       <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col-reverse items-center sm:flex-row-reverse justify-between">
+        <div className="flex flex-col items-center sm:flex-row justify-between ">
           {/* Newsletter Section */}
           <div className="flex justify-end items-center mb-8 gap-2">
             <input
@@ -34,7 +34,7 @@ const FooterSection = () => {
         </div>
 
         {/* Links Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-right">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-left">
           {/* Quick Links Column */}
           <div>
             <h2 className="text-lg font-semibold mb-4 text-blue-400">

@@ -142,7 +142,35 @@ const CustomHamburgerMenu = () => {
                 Auto_Expire_Link
               </a>
             </li>
+            <li>
+              <a
+                onClick={() => doNavigate("about")}
+                href="#"
+                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                About-us
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={() => doNavigate("services")}
+                href="#"
+                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                Services
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={() => doNavigate("contact")}
+                href="#"
+                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                Contact-us
+              </a>
 
+
+            </li>
             <li>
               <a
                 onClick={() => auth.logout()}

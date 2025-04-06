@@ -1,10 +1,13 @@
 import React from "react";
 
-const TableRTL = ({ list = [], deleteOne, editOne }) => {
+const Table = ({ list = [], deleteOne, editOne }) => {
   return (
-    <div className="overflow-x-auto relative shadow-md sm:rounded-lg" dir="rtl">
-      <div className="flex flex-col justify-end  my-4">
-        <table className="w-full text-sm text-right text-gray-500 dark:text-gray-400">
+    <div
+      className="overflow-x-auto relative shadow-md sm:rounded-lg"
+      dir="ltr"
+    >
+      <div className="flex flex-col justify-start my-4">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
@@ -69,4 +72,4 @@ const TableRTL = ({ list = [], deleteOne, editOne }) => {
   );
 };
 
-export default TableRTL;
+export default Table;

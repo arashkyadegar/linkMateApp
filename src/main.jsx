@@ -18,6 +18,9 @@ import ShortLinkRedirect from "./components/Redirect/shortLinkRedirect";
 import ShortPasswordProtectedLinkList from "./components/PasswordProtectedLink/PasswordProtectedLinkList";
 import PasswordLinkRedirect from "./components/Redirect/PasswordLinkRedirect";
 import ShortLinkEditForm from "./components/ShortLink/ShortLinkEditForm";
+import AboutUs from "./components/About-us/About-us";
+import Services from "./components/Services/Services";
+import ContactUs from "./components/Contact-us/Contact-us";
 createRoot(document.getElementById("root")).render(
   <Router>
     <DarkModeProvider>
@@ -28,6 +31,11 @@ createRoot(document.getElementById("root")).render(
           <Route path="psw-url/:id" element={<PasswordLinkRedirect />} />
           <Route path="/" element={<Layout />}>
             <Route path="not-allowed" element={<NotAllowed />} />
+
+            <Route path="/about" element={<AboutUs />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/services" element={<Services />} />
+
 
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<LoginPage />} />
