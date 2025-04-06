@@ -17,17 +17,8 @@ const CustomHamburgerMenu = () => {
   return (
     <nav className=" dark:bg-gray-900 dark:border-gray-700">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse">
-          {/* <img
-            src="https://flowbite.com/docs/images/logo.svg"
-            className="h-8"
-            alt="Flowbite Logo"
-          /> */}
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            LinkMate.ir
-          </span>
-        </a>
-        <div className="flex flex-row gap-1">
+
+        <div className="flex flex-row-reverse gap-1">
           <DarkModeToggle />
           {/* login toggle */}
           <button
@@ -94,9 +85,18 @@ const CustomHamburgerMenu = () => {
             </svg>
           </button>
         </div>
-
+        <a href="#" className="flex items-center space-x-3">
+          {/* <img
+            src="https://flowbite.com/docs/images/logo.svg"
+            className="h-8"
+            alt="Flowbite Logo"
+          /> */}
+          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+            LinkMate.ir
+          </span>
+        </a>
         <div className={isOpen ? "block w-full " : "hidden w-full "}>
-          <ul className=" w-full flex flex-col text-right font-medium p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50  dark:bg-gray-800 dark:border-gray-700">
+          <ul className=" w-full flex flex-col text-left font-medium p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50  dark:bg-gray-800 dark:border-gray-700">
             <li>
               <a
                 href="#"
