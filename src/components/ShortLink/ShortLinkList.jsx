@@ -4,6 +4,7 @@ import MyTable from "../Table/Table";
 import axios from "axios";
 import { PaginationComponent } from "../pagination/pagination";
 import { useNavigate } from "react-router-dom";
+import { ToastSuccess, ToastFail } from "../Toast/ToastAlert";
 const ShortLinkList = () => {
   const navigate = useNavigate();
   const [linkList, setLinkList] = useState([]);
@@ -28,6 +29,7 @@ const ShortLinkList = () => {
 
   const nextpage = async (page) => {
     try {
+      let x = confirm("yeah?");
       const response = await axios.get(
         `http://localhost:3000/short-links/findbyuserid?page=${page}`,
         {
@@ -42,20 +44,24 @@ const ShortLinkList = () => {
   };
 
   const editOne = async (id) => {
-    console.log(id)
     navigate(`/short-link/${id}`);
   };
 
   const deleteOne = async (id) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:3000/short-links/${id}`,
-        {
-          withCredentials: true,
+    if (confirm("delete?")) {
+      try {
+        const response = await axios.delete(
+          `http://localhost:3000/short-links/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.status === 200) {
+          ToastSuccess();
         }
-      );
-    } catch (error) {
-      console.error("Error submitting data:", error);
+      } catch (error) {
+        console.error("Error submitting data:", error);
+      }
     }
   };
 
