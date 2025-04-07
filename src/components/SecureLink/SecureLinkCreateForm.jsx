@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import PersianDatePicker from "../PersianDatePicker";
 import axios from "axios";
 import { ToastSuccess, ToastFail, ToastConfilict } from "../Toast/ToastAlert";
-import ShortenedPasswordLink from "./shortendPasswordProtectedLink";
-const PasswordProtectedLinkCreateForm = () => {
+import ShortenedPasswordLink from "./shortendSecureLink";
+const SecureLinkCreateForm = () => {
   const [formData, setFormData] = useState({
     originalUrl: "",
     shortCode: "",
@@ -82,8 +82,8 @@ const PasswordProtectedLinkCreateForm = () => {
 
         setShortenedData({
           link:
-            import.meta.env.VITE_SERVERURL_PASSWORDLINK +
-            "/passwordlink/" +
+            import.meta.env.VITE_APPURL +
+            "/psw-url/" +
             response.data.shortCode,
         });
         ToastSuccess("Success! The link has been created.");
@@ -105,7 +105,7 @@ const PasswordProtectedLinkCreateForm = () => {
     <div className="bg-gray-50 dark:bg-gray-900 py-10 px-4">
       <div className="w-full max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <h4 className="text-xl font-bold mb-6 text-gray-900 dark:text-white text-left">
-          Create New Password Protected Link
+          Create New secure Link
         </h4>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Original URL Input */}
@@ -257,4 +257,4 @@ const PasswordProtectedLinkCreateForm = () => {
   );
 };
 
-export default PasswordProtectedLinkCreateForm;
+export default SecureLinkCreateForm;

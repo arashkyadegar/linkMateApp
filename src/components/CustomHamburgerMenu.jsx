@@ -118,19 +118,19 @@ const CustomHamburgerMenu = () => {
             <li>
               <a
                 href="#"
-                onClick={() => doNavigate("password-protected-link")}
+                onClick={() => doNavigate("secure-link")}
                 className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
               >
-                Password-Protected-Link
+                Secure-Link
               </a>
             </li>
             <li>
               <a
                 href="#"
-                onClick={() => doNavigate("/password-protected-link-list")}
+                onClick={() => doNavigate("/secure-link-list")}
                 className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
               >
-                password-protected-Link-List
+                Secure-Link-List
               </a>
             </li>
             <li>
@@ -139,7 +139,7 @@ const CustomHamburgerMenu = () => {
                 href="#"
                 className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
               >
-                Auto_Expire_Link
+                Timed_Link
               </a>
             </li>
             <li>

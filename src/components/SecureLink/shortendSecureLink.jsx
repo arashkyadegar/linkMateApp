@@ -1,7 +1,7 @@
 import React from "react";
 import { QRCodeCanvas } from "qrcode.react";
 
-const ShortenedPasswordLink = ({ link }) => {
+const SecureLink = ({ link }) => {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(link);
     alert("Link copied to clipboard!");
@@ -74,4 +74,4 @@ const ShortenedPasswordLink = ({ link }) => {
   );
 };
 
-export default ShortenedPasswordLink;
+export default SecureLink;

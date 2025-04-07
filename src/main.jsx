@@ -8,19 +8,20 @@ import AutoExpreLinkCreateForm from "./components/AutoExpreLink/AutoExpreLinkCre
 import Dashboard from "./components/Dashboard/Dashboard";
 import Layout from "./components/Layout/Layout";
 import ShortLinkCreateForm from "./components/ShortLink/ShortLinkCreateForm";
-import PasswordProtectedLinkCreateForm from "./components/PasswordProtectedLink/PasswordProtectedLinkCreateForm";
+import SecureLinkCreateForm from "./components/SecureLink/SecureLinkCreateForm";
 import { Toaster } from "react-hot-toast";
 import NotAllowed from "./components/Layout/NotAllowed";
 import ShortLinkList from "./components/ShortLink/ShortLinkList";
 import ProtectedRoute from "./components/protected-route/protected-route";
 import AuthProvider from "./components/hooks/AuthProvider";
 import ShortLinkRedirect from "./components/Redirect/shortLinkRedirect";
-import ShortPasswordProtectedLinkList from "./components/PasswordProtectedLink/PasswordProtectedLinkList";
+import SecureLinkList from "./components/SecureLink/SecureLinkList";
 import PasswordLinkRedirect from "./components/Redirect/PasswordLinkRedirect";
 import ShortLinkEditForm from "./components/ShortLink/ShortLinkEditForm";
 import AboutUs from "./components/About-us/About-us";
 import Services from "./components/Services/Services";
 import ContactUs from "./components/Contact-us/Contact-us";
+import SecureLinkEditForm from "./components/SecureLink/SecureLinkEditForm";
 createRoot(document.getElementById("root")).render(
   <Router>
     <DarkModeProvider>
@@ -61,19 +62,29 @@ createRoot(document.getElementById("root")).render(
             />
 
             <Route
-              path="/password-protected-link"
+              path="/secure-link"
               element={
                 <ProtectedRoute>
-                  <PasswordProtectedLinkCreateForm />
+                  <SecureLinkCreateForm />
                 </ProtectedRoute>
               }
             />
 
             <Route
-              path="/password-protected-link-list"
+              path="/secure-link-list/:id"
               element={
                 <ProtectedRoute>
-                  <ShortPasswordProtectedLinkList />
+                  <SecureLinkEditForm />
+                </ProtectedRoute>
+              }
+            />
+
+
+            <Route
+              path="/secure-link-list"
+              element={
+                <ProtectedRoute>
+                  <SecureLinkList />
                 </ProtectedRoute>
               }
             />
