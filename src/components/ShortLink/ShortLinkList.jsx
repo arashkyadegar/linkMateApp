@@ -46,7 +46,9 @@ const ShortLinkList = () => {
   const editOne = async (id) => {
     navigate(`/short-link/${id}`);
   };
-
+  const visitOne = async (id) => {
+    window.open(`http://localhost:3000/short-links/shortlink/${id}`, "_blank");
+  }
   const deleteOne = async (id) => {
     if (confirm("delete?")) {
       try {
@@ -76,6 +78,7 @@ const ShortLinkList = () => {
             list={linkList.result}
             deleteOne={deleteOne}
             editOne={editOne}
+            visitOne={visitOne}
           />
           <div className="flex flex-row-reverse gap-2 justify-center mt-6">
             <PaginationComponent

@@ -43,6 +43,11 @@ const SecureLinkList = () => {
   const editOne = async (id) => {
     navigate(`/secure-link-list/${id}`);
   };
+
+  const visitOne = async (id) => {
+    window.open(`http://localhost:3000/password-links/passwordlink/${id}`, "_blank");
+  }
+
   const deleteOne = async (id) => {
     if (confirm("delete?")) {
       try {
@@ -72,6 +77,8 @@ const SecureLinkList = () => {
             list={linkList.result}
             deleteOne={deleteOne}
             editOne={editOne}
+            visitOne={visitOne}
+
           />
           <div className="flex flex-row-reverse gap-2 justify-center mt-6">
             <PaginationComponent
