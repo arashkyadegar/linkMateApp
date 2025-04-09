@@ -1,6 +1,6 @@
 const FooterSection = () => {
   const scrollToTop = () => {
-    window.scrollTo({ top: 100, behavior: "smooth" }); // Smooth scroll back to the top
+    window.scrollTo({ top: 0, behavior: "smooth" }); // Smooth scroll back to the top
   };
 
   return (
