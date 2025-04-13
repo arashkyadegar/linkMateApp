@@ -22,6 +22,7 @@ import AboutUs from "./components/About-us/About-us";
 import Services from "./components/Services/Services";
 import ContactUs from "./components/Contact-us/Contact-us";
 import SecureLinkEditForm from "./components/SecureLink/SecureLinkEditForm";
+import RegisterPage from "./components/RegisterPage";
 createRoot(document.getElementById("root")).render(
   <Router>
     <DarkModeProvider>
@@ -39,6 +40,7 @@ createRoot(document.getElementById("root")).render(
 
 
             <Route path="/" element={<Dashboard />} />
+            <Route path="/register" element={<RegisterPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/short-link" element={<ShortLinkCreateForm />} />

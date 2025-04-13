@@ -9,8 +9,13 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const emailTxtRef = useRef();
   const passworsTxtRef = useRef();
+  const doNavigate = (link) => {
+    navigate(link);
 
+  };
   async function loginSubmit() {
+
+    console.log(emailTxtRef.current.value)
     const data = {
       email: "ssss@gmail.com",
       password: "1@Adsdd321",
@@ -38,7 +43,7 @@ const LoginPage = () => {
             <input
               ref={emailTxtRef}
               type="text"
-              placeholder="Username or email"
+              placeholder="Email"
               className="w-full px-4 py-2 border rounded-lg bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
             />
           </div>
@@ -65,9 +70,11 @@ const LoginPage = () => {
             LOGIN
           </button>
           <div className="text-center mt-4">
-            <a href="#" className="text-blue-500 dark:text-blue-400">
+          <button
+              onClick={() => { doNavigate('/register') }}
+              className="text-blue-500 dark:text-blue-400">
               Register now
-            </a>
+            </button>
           </div>
           <div className="text-center my-4 text-gray-500 dark:text-gray-400">
             or
