@@ -3,7 +3,7 @@ import { useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./hooks/AuthProvider";
-
+import { ToastSuccess, ToastFail } from "./Toast/ToastAlert";
 const RegisterPage = () => {
   const navigate = useNavigate();
   const auth = useAuth();
@@ -22,17 +22,20 @@ const RegisterPage = () => {
     const email = emailTxtRef.current.value;
     const password = passworsTxtRef.current.value;
     const confirmPassword = passwordConfirmTxtRef.current.value;
-
+  
+    const passwordRegex = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/;
+  
     if (!email || !/\S+@\S+\.\S+/.test(email)) {
       newErrors.email = "Please enter a valid email address.";
     }
-    if (!password || password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters.";
+    if (!password || !passwordRegex.test(password)) {
+      newErrors.password =
+        "Password must include at least one lowercase letter, one uppercase letter, and one number or special character.";
     }
     if (password !== confirmPassword) {
       newErrors.confirmPassword = "Passwords do not match.";
     }
-
+  
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; // Return true if no errors
   };
@@ -50,9 +53,12 @@ const RegisterPage = () => {
         "http://localhost:3000/auth/signup",
         data
       );
-      console.log(response.data)
-      // navigate("/dashboard");
+      if (response.status === 201) {
+        ToastSuccess("Success! Account Created.");
+      }
     } catch (error) {
+
+      ToastFail(error.response?.status || "An error occurred.");
       console.error("Error submitting data:", error);
     }
   }

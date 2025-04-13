@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import DarkModeToggle from "./darkmode/darkmodeToggle";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../components/hooks/AuthProvider";
+import { UserContext } from "./context/usercontext";
+
 const CustomHamburgerMenu = () => {
+  const { username } = useContext(UserContext);
   const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+
   const navigate = useNavigate();
   const doNavigate = (link) => {
     navigate(link);
@@ -19,8 +23,14 @@ const CustomHamburgerMenu = () => {
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 
         <div className="flex flex-row-reverse gap-1">
+          <div className="flex flex-col items-center justify-center text-sm text-gray-500
+            dark:text-gray-400"><a>
+              {username ? `Welcome, ${username.email}!` : ""}</a>
+          </div>
           <DarkModeToggle />
           {/* login toggle */}
+
+
           <button
             onClick={() => doNavigate("/dashboard")}
             className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"

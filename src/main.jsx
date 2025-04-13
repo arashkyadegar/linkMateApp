@@ -23,85 +23,90 @@ import Services from "./components/Services/Services";
 import ContactUs from "./components/Contact-us/Contact-us";
 import SecureLinkEditForm from "./components/SecureLink/SecureLinkEditForm";
 import RegisterPage from "./components/RegisterPage";
+import { UserProvider } from "./components/context/usercontext";
 createRoot(document.getElementById("root")).render(
   <Router>
     <DarkModeProvider>
-      <Toaster />
-      <AuthProvider>
-        <Routes>
-          <Route path="url/:id" element={<ShortLinkRedirect />} />
-          <Route path="psw-url/:id" element={<PasswordLinkRedirect />} />
-          <Route path="/" element={<Layout />}>
-            <Route path="not-allowed" element={<NotAllowed />} />
+      <UserProvider>
+        <Toaster />
+        <AuthProvider>
 
-            <Route path="/about" element={<AboutUs />} />
-            <Route path="/contact" element={<ContactUs />} />
-            <Route path="/services" element={<Services />} />
+          <Routes>
+            <Route path="url/:id" element={<ShortLinkRedirect />} />
+            <Route path="psw-url/:id" element={<PasswordLinkRedirect />} />
+            <Route path="/" element={<Layout />}>
+              <Route path="not-allowed" element={<NotAllowed />} />
 
-
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/short-link" element={<ShortLinkCreateForm />} />
-
-            <Route
-              path="/short-link/:id"
-              element={
-                <ProtectedRoute>
-                  <ShortLinkEditForm />
-                </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="/short-link-list"
-              element={
-                <ProtectedRoute>
-                  <ShortLinkList />
-                </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="/secure-link"
-              element={
-                <ProtectedRoute>
-                  <SecureLinkCreateForm />
-                </ProtectedRoute>
-              }
-            />
-
-            <Route
-              path="/secure-link-list/:id"
-              element={
-                <ProtectedRoute>
-                  <SecureLinkEditForm />
-                </ProtectedRoute>
-              }
-            />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/services" element={<Services />} />
 
 
-            <Route
-              path="/secure-link-list"
-              element={
-                <ProtectedRoute>
-                  <SecureLinkList />
-                </ProtectedRoute>
-              }
-            />
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/short-link" element={<ShortLinkCreateForm />} />
 
-            <Route
-              path="/auto-expire-link"
-              element={
-                <ProtectedRoute>
-                  <AutoExpreLinkCreateForm />
-                </ProtectedRoute>
-              }
-            />
-          </Route>
-        </Routes>
-      </AuthProvider>
+              <Route
+                path="/short-link/:id"
+                element={
+                  <ProtectedRoute>
+                    <ShortLinkEditForm />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/short-link-list"
+                element={
+                  <ProtectedRoute>
+                    <ShortLinkList />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/secure-link"
+                element={
+                  <ProtectedRoute>
+                    <SecureLinkCreateForm />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/secure-link-list/:id"
+                element={
+                  <ProtectedRoute>
+                    <SecureLinkEditForm />
+                  </ProtectedRoute>
+                }
+              />
+
+
+              <Route
+                path="/secure-link-list"
+                element={
+                  <ProtectedRoute>
+                    <SecureLinkList />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/auto-expire-link"
+                element={
+                  <ProtectedRoute>
+                    <AutoExpreLinkCreateForm />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+          </Routes>
+
+        </AuthProvider>
+      </UserProvider>
     </DarkModeProvider>
   </Router>
 );

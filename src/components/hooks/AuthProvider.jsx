@@ -1,10 +1,11 @@
 import React from "react";
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { UserContext } from "../context/usercontext";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const { username,setUsername } = useContext(UserContext);
   const storedInfo = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user") || "{}")
     : null;
@@ -20,6 +21,7 @@ const AuthProvider = ({ children }) => {
     setTimeout(() => {
       const obj = { ...data };
       setUser(data.user);
+      setUsername(data.user)
       localStorage.setItem("user", JSON.stringify(data.user));
       navigate("/dashboard");
     }, 0);
@@ -27,7 +29,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    // setToken("");
+    setUsername(null)
     localStorage.removeItem("user");
   };
 
