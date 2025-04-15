@@ -1,7 +1,7 @@
 import React from "react";
 import { QRCodeCanvas } from "qrcode.react";
 
-const TimeLink = ({ link }) => {
+const ShortenedTimeLink = ({ link }) => {
     const copyToClipboard = () => {
         navigator.clipboard.writeText(link);
         alert("Link copied to clipboard!");
@@ -74,4 +74,4 @@ const TimeLink = ({ link }) => {
     );
 };
 
-export default TimeLink;
+export default ShortenedTimeLink;

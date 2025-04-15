@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
 import PersianDatePicker from "../PersianDatePicker";
-import { ToastSuccess, ToastFail } from "../Toast/ToastAlert";
+import axios from "axios";
+import { ToastSuccess, ToastFail, ToastConfilict } from "../Toast/ToastAlert";
 import ShortenedTimeLink from "./ShortenedTimeLink";
-const TimeLinkCreateForm = () => {
+import { useParams } from "react-router-dom";
+import { useEffect, useRef } from "react";
+const TimeLinkEditForm = () => {
+  const { id } = useParams();
   const [formData, setFormData] = useState({
     originalUrl: "",
     shortCode: "",
@@ -11,76 +14,130 @@ const TimeLinkCreateForm = () => {
     expirationDate: new Date(),
     createdAt: null, // Set by PersianDatePicker
   });
-  const [errors, setErrors] = useState({}); // Tracks validation errors for each field
-  const [shortenedData, setShortenedData] = useState(null); // Manage the visibility of ShortenedLink
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form behavior
-    // Prepare data for the API
-    const data = {
-      userId: "",
-      originalUrl: formData.originalUrl,
-      shortCode: formData.customShortlink,
-      visitCount: 0,
-      expirationDate: new Date(formData.expirationDate).toISOString(),
-      isSingleUse: formData.isSingleUse,
-      isUsed: false,
-    };
+  useEffect(() => {
+    fetchSecureLink();
+  }, []);
 
+
+  const fetchSecureLink = async () => {
     try {
-      // Make the API call
-      const response = await axios.post(
-        "http://localhost:3000/time-links/",
-        data,
+      const response = await axios.get(
+        `http://localhost:3000/time-links/${id}`,
         {
-          withCredentials: true, // Handle credentials (cookies, etc.)
+          withCredentials: true,
         }
       );
+      const { originalUrl, shortCode, isSingleUse, expirationDate } = response.data;
 
-      if (response.status === 201) {
-        // Set shortened link data
-        setShortenedData({
-          link:
-            import.meta.env.VITE_SERVERURL +
-            "/tlnk/" +
-            response.data.shortCode,
-        });
-        ToastSuccess("Success! The link has been shortened.");
-      }
-
-      // Clear errors after successful submission
-      setErrors({});
+      // Update the formData state with the fetched data
+      setFormData({
+        originalUrl: originalUrl || "",
+        shortCode: shortCode || "",
+        isSingleUse: isSingleUse || false,
+        expirationDate: expirationDate || ""
+      });
     } catch (error) {
-      // Handle API errors
-      ToastFail(error.response?.status || "An error occurred.");
-      console.error("Error submitting data:", error);
+      ToastFail(
+        error.response?.status || "An error occurred while fetching data."
+      );
+      console.error("Error fetching data:", error);
     }
   };
 
+  const [errors, setErrors] = useState({}); // Tracks validation errors for each field
+  const [shortenedData, setShortenedData] = useState(null); // Manage the visibility of ShortenedLink
+
   const handleChange = (e) => {
-    const { name, type, value, checked } = e.target;
-    setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
   const handleDateChange = (selectedDate) => {
     setFormData({ ...formData, expirationDate: selectedDate });
   };
 
+  const validateFields = () => {
+    const errors = {};
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0; // Return true if no errors
+  };
   const handleReset = () => {
     setFormData({
       originalUrl: "",
       shortCode: "",
+      password: "",
       isSingleUse: false,
+      confirmPassword: "",
       expirationDate: "",
       createdAt: null, // Set by PersianDatePicker
     });
     setErrors({});
     setShortenedData(null);
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.expirationDate == "") {
+    }
+
+    if (validateFields()) {
+      const data = {
+        userId: "",
+        originalUrl: formData.originalUrl,
+        shortCode: formData.shortCode,
+        visitCount: 0,
+        passwordHash: formData.password,
+        isSingleUse: formData.isSingleUse,
+        expirationDate: formData.expirationDate
+          ? new Date(formData.expirationDate).toISOString()
+          : null,
+        isUsed: false,
+      };
+      try {
+        const response = await axios
+          .put(`http://localhost:3000/time-links/${id}`, data, {
+            withCredentials: true,
+          })
+          .catch((error) => {
+            switch (error.status) {
+              case 409: {
+                ToastConfilict(error.message);
+                break;
+              }
+              case 400: {
+                ToastFail(error.message);
+                break;
+              }
+            }
+          });
+
+        setShortenedData({
+          link:
+            import.meta.env.VITE_SERVERURL +
+            "/tlnk/" +
+            response.data.shortCode,
+        });
+        ToastSuccess("Success! The link has been created.");
+
+        setErrors({});
+      } catch (error) {
+        // if (error.response) {
+        //   ToastFail(error.response.message); // Access response status safely
+        //   console.error("Error submitting data:", error.response);
+        // } else {
+        //   ToastFail("An unexpected error occurred"); // Handle undefined response
+        //   console.error("Error:", error.message);
+        // }
+      }
+    }
+  };
+
   return (
     <div className="bg-gray-50 dark:bg-gray-900 py-10 px-4">
       <div className="w-full max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <h4 className="text-xl font-bold mb-6 text-gray-900 dark:text-white text-left">
-          Create New secure Link
+          Edit time Link
         </h4>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Original URL Input */}
@@ -125,6 +182,51 @@ const TimeLinkCreateForm = () => {
             )}
           </div>
 
+          {/* Password Input */}
+          <div className="flex flex-col gap-4">
+            <label
+              htmlFor="password"
+              className="sm:w-1/4 text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Password <span className="text-red-600 text-lg">*</span>
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter password"
+              required
+              className="flex-1 block w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            />
+            {errors.password && (
+              <p className="text-sm text-red-500">{errors.password}</p>
+            )}
+          </div>
+
+          {/* Confirm Password Input */}
+          <div className="flex flex-col gap-4">
+            <label
+              htmlFor="confirmPassword"
+              className="sm:w-1/4 text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Confirm Password <span className="text-red-600 text-lg">*</span>
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Re-enter password"
+              required
+              className="flex-1 block w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            />
+            {errors.confirmPassword && (
+              <p className="text-sm text-red-500">{errors.confirmPassword}</p>
+            )}
+          </div>
 
           {/* Custom DateTime Picker Input */}
           <div className="flex flex-col gap-4">
@@ -187,4 +289,4 @@ const TimeLinkCreateForm = () => {
   );
 };
 
-export default TimeLinkCreateForm;
+export default TimeLinkEditForm;
