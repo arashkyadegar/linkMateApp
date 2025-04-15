@@ -86,8 +86,8 @@ const ShortLinkEditForm = () => {
         // Set shortened link data
         setShortenedData({
           link:
-            import.meta.env.VITE_APPURL +
-            "/url/" +
+            import.meta.env.VITE_SERVERURL +
+            "/lnk/" +
             response.data.shortCode,
         });
         ToastSuccess("Success! The link has been shortened.");

@@ -82,8 +82,8 @@ const SecureLinkCreateForm = () => {
 
         setShortenedData({
           link:
-            import.meta.env.VITE_APPURL +
-            "/psw-url/" +
+            import.meta.env.VITE_SERVERURL +
+            "/slnk/" +
             response.data.shortCode,
         });
         ToastSuccess("Success! The link has been created.");

@@ -5,7 +5,7 @@ import axios from "axios";
 import { PaginationComponent } from "../pagination/pagination";
 import { useNavigate } from "react-router-dom";
 import { ToastSuccess, ToastFail } from "../Toast/ToastAlert";
-const SecureLinkList = () => {
+const TimeLinkList = () => {
   const [linkList, setLinkList] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -15,7 +15,7 @@ const SecureLinkList = () => {
   const nextpage = async (page) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/password-links/findbyuserid?page=${page}`,
+        `http://localhost:3000/time-links/findbyuserid?page=${page}`,
         {
           withCredentials: true,
         }
@@ -29,7 +29,7 @@ const SecureLinkList = () => {
   const getAll = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/password-links/findbyuserid",
+        "http://localhost:3000/time-links/findbyuserid",
         {
           withCredentials: true,
         }
@@ -45,14 +45,14 @@ const SecureLinkList = () => {
   };
 
   const visitOne = async (id) => {
-    window.open(`http://localhost:3000/slnk/${id}`, "_blank");
+    window.open(`http://localhost:3000/tlnk/${id}`, "_blank");
   }
 
   const deleteOne = async (id) => {
     if (confirm("delete?")) {
       try {
         const response = await axios.delete(
-          `http://localhost:3000/password-links/${id}`,
+          `http://localhost:3000/time-links/${id}`,
           {
             withCredentials: true,
           }
@@ -70,7 +70,7 @@ const SecureLinkList = () => {
     <div className="bg-gray-50 dark:bg-gray-900 py-10 px-4" dir="rtl">
       <div className="w-full max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <h4 className="text-xl font-bold mb-6 text-gray-900 dark:text-white text-left">
-          Secure Link List
+          Time Link List
         </h4>
         <div className="max-w-4xl">
           <MyTable
@@ -92,4 +92,4 @@ const SecureLinkList = () => {
     </div>
   );
 };
-export default SecureLinkList;
+export default TimeLinkList;

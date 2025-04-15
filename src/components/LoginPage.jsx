@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../components/hooks/AuthProvider";
-
+import { ToastSuccess, ToastFail } from "./Toast/ToastAlert";
 const LoginPage = () => {
   const auth = useAuth();
   const navigate = useNavigate();
@@ -45,7 +45,8 @@ const LoginPage = () => {
       auth.login(response.data);
       navigate("/dashboard");
     } catch (error) {
-      console.error("Error submitting data:", error);
+      ToastFail("Error submitting data:", error)
+      // console.error("Error submitting data:", error);
     }
   };
 

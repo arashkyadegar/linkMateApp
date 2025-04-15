@@ -47,7 +47,7 @@ const ShortLinkList = () => {
     navigate(`/short-link/${id}`);
   };
   const visitOne = async (id) => {
-    window.open(`http://localhost:3000/short-links/shortlink/${id}`, "_blank");
+    window.open(`http://localhost:3000/lnk/${id}`, "_blank");
   }
   const deleteOne = async (id) => {
     if (confirm("delete?")) {

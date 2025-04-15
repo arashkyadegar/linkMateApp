@@ -4,7 +4,7 @@ import "./index.css";
 import LoginPage from "./components/LoginPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { DarkModeProvider } from "./components/context/darkmodcontext";
-import AutoExpreLinkCreateForm from "./components/AutoExpreLink/AutoExpreLinkCreateForm";
+import TimeLinkCreateForm from "./components/TimeLink/TimeLinkCreateForm";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Layout from "./components/Layout/Layout";
 import ShortLinkCreateForm from "./components/ShortLink/ShortLinkCreateForm";
@@ -14,9 +14,9 @@ import NotAllowed from "./components/Layout/NotAllowed";
 import ShortLinkList from "./components/ShortLink/ShortLinkList";
 import ProtectedRoute from "./components/protected-route/protected-route";
 import AuthProvider from "./components/hooks/AuthProvider";
-import ShortLinkRedirect from "./components/Redirect/shortLinkRedirect";
+
 import SecureLinkList from "./components/SecureLink/SecureLinkList";
-import PasswordLinkRedirect from "./components/Redirect/PasswordLinkRedirect";
+import TimeLinkList from "./components/TimeLink/TimeLinkList";
 import ShortLinkEditForm from "./components/ShortLink/ShortLinkEditForm";
 import AboutUs from "./components/About-us/About-us";
 import Services from "./components/Services/Services";
@@ -32,8 +32,8 @@ createRoot(document.getElementById("root")).render(
         <AuthProvider>
 
           <Routes>
-            <Route path="url/:id" element={<ShortLinkRedirect />} />
-            <Route path="psw-url/:id" element={<PasswordLinkRedirect />} />
+            {/* <Route path="url/:id" element={<ShortLinkRedirect />} />
+            <Route path="psw-url/:id" element={<PasswordLinkRedirect />} /> */}
             <Route path="/" element={<Layout />}>
               <Route path="not-allowed" element={<NotAllowed />} />
 
@@ -95,13 +95,25 @@ createRoot(document.getElementById("root")).render(
               />
 
               <Route
-                path="/auto-expire-link"
+                path="/time-link"
                 element={
                   <ProtectedRoute>
-                    <AutoExpreLinkCreateForm />
+                    <TimeLinkCreateForm />
                   </ProtectedRoute>
                 }
               />
+
+
+              <Route
+                path="/time-link-list"
+                element={
+                  <ProtectedRoute>
+                    <TimeLinkList />
+                  </ProtectedRoute>
+                }
+              />
+
+
             </Route>
           </Routes>
 

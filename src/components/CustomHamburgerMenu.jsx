@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import DarkModeToggle from "./darkmode/darkmodeToggle";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../components/hooks/AuthProvider";
@@ -24,13 +24,16 @@ const CustomHamburgerMenu = () => {
 
         <div className="flex flex-row-reverse gap-1">
           <div className="flex flex-col items-center justify-center text-sm text-gray-500
-            dark:text-gray-400"><a>
-              {username ? `Welcome, ${username.email}!` : ""}</a>
+            dark:text-gray-400">
+            {username && (
+              <a>
+                {username.email ? <span>Welcome, <span className="text-orange-500">{username.email}</span>!</span> : ""}
+              </a>
+            )}
+
           </div>
           <DarkModeToggle />
           {/* login toggle */}
-
-
           <button
             onClick={() => doNavigate("/dashboard")}
             className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -145,11 +148,21 @@ const CustomHamburgerMenu = () => {
             </li>
             <li>
               <a
-                onClick={() => doNavigate("auto-expire-link")}
+                onClick={() => doNavigate("time-link")}
                 href="#"
                 className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 Timed_Link
+              </a>
+            </li>
+
+            <li>
+              <a
+                onClick={() => doNavigate("/time-link-list")}
+                href="#"
+                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                Timed_Link_List
               </a>
             </li>
             <li>
