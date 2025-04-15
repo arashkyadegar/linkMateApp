@@ -2,10 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import DarkModeToggle from "./darkmode/darkmodeToggle";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../components/hooks/AuthProvider";
-import { UserContext } from "./context/usercontext";
+import { useSelector } from 'react-redux';
+
 
 const CustomHamburgerMenu = () => {
-  const { username } = useContext(UserContext);
+  const userState = useSelector((state) => state.user.value);
   const auth = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -25,9 +26,9 @@ const CustomHamburgerMenu = () => {
         <div className="flex flex-row-reverse gap-1">
           <div className="flex flex-col items-center justify-center text-sm text-gray-500
             dark:text-gray-400">
-            {username && (
+            {userState && (
               <a>
-                {username.email ? <span>Welcome, <span className="text-orange-500">{username.email}</span>!</span> : ""}
+                {userState.email ? <span>Welcome, <span className="text-orange-500">{userState.email}</span>!</span> : ""}
               </a>
             )}
 

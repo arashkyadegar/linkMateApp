@@ -2,10 +2,18 @@ import React from "react";
 import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/usercontext";
+
+import { useSelector, useDispatch } from 'react-redux';
+import { fetched } from '../redux/user';
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const { username,setUsername } = useContext(UserContext);
+
+  const userState = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const { username, setUsername } = useContext(UserContext);
   const storedInfo = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user") || "{}")
     : null;
@@ -22,6 +30,7 @@ const AuthProvider = ({ children }) => {
       const obj = { ...data };
       setUser(data.user);
       setUsername(data.user)
+      dispatch(fetched(data.user))
       localStorage.setItem("user", JSON.stringify(data.user));
       navigate("/dashboard");
     }, 0);
@@ -30,6 +39,7 @@ const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     setUsername(null)
+    dispatch(fetched(null))
     localStorage.removeItem("user");
   };
 
