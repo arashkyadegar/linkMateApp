@@ -41,7 +41,7 @@ const TimeLinkList = () => {
     }
   };
   const editOne = async (id) => {
-    navigate(`/secure-link-list/${id}`);
+    navigate(`/time-link/${id}`);
   };
 
   const visitOne = async (id) => {

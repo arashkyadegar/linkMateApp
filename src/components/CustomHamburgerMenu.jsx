@@ -197,7 +197,7 @@ const CustomHamburgerMenu = () => {
             </li>
             <li>
               <a
-                onClick={() => auth.logout()}
+                onClick={() => { auth.logout(); setIsOpen(false); }}
                 href="#"
                 className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
               >

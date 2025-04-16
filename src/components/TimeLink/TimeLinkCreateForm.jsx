@@ -15,7 +15,6 @@ const TimeLinkCreateForm = () => {
   const [shortenedData, setShortenedData] = useState(null); // Manage the visibility of ShortenedLink
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form behavior
     // Prepare data for the API
     const data = {
       userId: "",

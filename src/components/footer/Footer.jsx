@@ -116,7 +116,7 @@ const FooterSection = () => {
                   className="hover:text-blue-500 transition flex items-center"
                 >
                   <img
-                    src="/path-to-icons/twitter-icon.png" // Replace with actual icon path
+                    src="/twitter-color-svgrepo-com.svg" // Replace with actual icon path
                     alt="Twitter"
                     className="h-6 w-6 ml-2"
                   />
@@ -131,7 +131,7 @@ const FooterSection = () => {
                   className="hover:text-blue-500 transition flex items-center"
                 >
                   <img
-                    src="/path-to-icons/facebook-icon.png" // Replace with actual icon path
+                    src="/facebook-color-svgrepo-com.svg" // Replace with actual icon path
                     alt="Facebook"
                     className="h-6 w-6 ml-2"
                   />
@@ -146,7 +146,7 @@ const FooterSection = () => {
                   className="hover:text-pink-500 transition flex items-center"
                 >
                   <img
-                    src="/path-to-icons/instagram-icon.png" // Replace with actual icon path
+                    src="/instagram-1-svgrepo-com.svg" // Replace with actual icon path
                     alt="Instagram"
                     className="h-6 w-6 ml-2"
                   />
@@ -161,7 +161,7 @@ const FooterSection = () => {
                   className="hover:text-blue-500 transition flex items-center"
                 >
                   <img
-                    src="/path-to-icons/linkedin-icon.png" // Replace with actual icon path
+                    src="/linkedin-svgrepo-com.svg" // Replace with actual icon path
                     alt="LinkedIn"
                     className="h-6 w-6 ml-2"
                   />

@@ -14,7 +14,7 @@ import NotAllowed from "./components/Layout/NotAllowed";
 import ShortLinkList from "./components/ShortLink/ShortLinkList";
 import ProtectedRoute from "./components/protected-route/protected-route";
 import AuthProvider from "./components/hooks/AuthProvider";
-
+import TimeLinkEditForm from "./components/TimeLink/TimeLinkEditForm";
 import SecureLinkList from "./components/SecureLink/SecureLinkList";
 import TimeLinkList from "./components/TimeLink/TimeLinkList";
 import ShortLinkEditForm from "./components/ShortLink/ShortLinkEditForm";
@@ -84,7 +84,7 @@ createRoot(document.getElementById("root")).render(
                   />
 
                   <Route
-                    path="/secure-link-list/:id"
+                    path="/secure-link/:id"
                     element={
                       <ProtectedRoute>
                         <SecureLinkEditForm />
@@ -110,7 +110,14 @@ createRoot(document.getElementById("root")).render(
                       </ProtectedRoute>
                     }
                   />
-
+                  <Route
+                    path="/time-link/:id"
+                    element={
+                      <ProtectedRoute>
+                        <TimeLinkEditForm />
+                      </ProtectedRoute>
+                    }
+                  />
 
                   <Route
                     path="/time-link-list"

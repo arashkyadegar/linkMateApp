@@ -1,28 +1,9 @@
 import React, { useState } from "react";
-
+import Services from "../Services/Services";
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const services = [
-    {
-      icon: "🔗",
-      title: "ShortLink",
-      description:
-        "Transform long URLs into compact, shareable links that are perfect for every platform.",
-    },
-    {
-      icon: "🔒",
-      title: "Password-Protected Links",
-      description:
-        "Secure your links with a password for confidential sharing.",
-    },
-    {
-      icon: "🔄",
-      title: "Single-Use Links",
-      description:
-        "Ensure your links can only be accessed once for added privacy and control.",
-    },
-  ];
+
 
   const benefits = [
     {
@@ -42,9 +23,7 @@ const Dashboard = () => {
     },
   ];
 
-  const filteredServices = services.filter((service) =>
-    service.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+
 
   const HeroSection = () => {
     return (
@@ -72,19 +51,8 @@ const Dashboard = () => {
 
   const ServicesSection = () => {
     return (
-      <section className="py-12 px-6 bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {filteredServices.map((service, index) => (
-            <div
-              key={index}
-              className="p-6 rounded-lg shadow-lg bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-200"
-            >
-              <h3 className="text-xl font-semibold">{service.title}</h3>
-              <p className="mt-2">{service.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+
+      <Services/>
     );
   };
 
@@ -94,21 +62,21 @@ const Dashboard = () => {
         title: "Convenience Simplified",
         description:
           "Shortening and managing links has never been easier, thanks to our intuitive interface.",
-        image: "/group-technology-connection-0410-5706344.jpg", // Replace with actual image path
+        image: "/jump.jpeg", // Replace with actual image path
       },
       {
         title: "Stay in Control",
         description:
           "Control who accesses your links with advanced security features like passwords and expiration timers.",
         image:
-          "/f4a36f6589a0e50e702740b15352bc00e4bfaf6f58bd4db850e167794d05993d.jpg", // Replace with actual image path
+          "/hand.jpeg", // Replace with actual image path
       },
       {
         title: "Smart Sharing",
         description:
           "Single-use links ensure your shared content remains exclusive and private.",
         image:
-          "/f4a36f6589a0e50e702740b15352bc00e4bfaf6f58bd4db850e167794d05993d (1).jpg", // Replace with actual image path
+          "/single-tree.jpeg", // Replace with actual image path
       },
     ];
 
