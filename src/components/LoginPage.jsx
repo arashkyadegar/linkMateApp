@@ -62,7 +62,7 @@ const LoginPage = () => {
               value={formValues.email}
               onChange={handleChange}
               placeholder="Email"
-              className={`w-full px-4 py-2 border rounded-lg ${
+              className={`w-full px-4 py-2 border rounded-lg bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 ${
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
             />
@@ -75,7 +75,7 @@ const LoginPage = () => {
               value={formValues.password}
               onChange={handleChange}
               placeholder="Password"
-              className={`w-full px-4 py-2 border rounded-lg ${
+              className={`w-full px-4 py-2 border rounded-lg bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 ${
                 errors.password ? "border-red-500" : "border-gray-300"
               }`}
             />

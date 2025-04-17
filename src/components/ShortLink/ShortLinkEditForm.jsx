@@ -1,250 +1,45 @@
-// import React, { useState } from "react";
-// import axios from "axios";
-// import ShortenedLink from "./shortendLink";
-// import { ToastSuccess, ToastFail } from "../Toast/ToastAlert";
-// import { useParams } from "react-router-dom";
-// import { useEffect, useRef } from "react";
-
-// const ShortLinkEditForm = () => {
-//   const { id } = useParams();
-//   const [formData, setFormData] = useState({
-//     originalUrl: "",
-//     customShortlink: "",
-//     isSingleUse: false,
-//   });
-//   const [errors, setErrors] = useState({});
-//   const [shortenedData, setShortenedData] = useState(null); // Manage the visibility of ShortenedLink
-//   useEffect(() => {
-//     fetchShortLink();
-//   }, []);
-
-//   const fetchShortLink = async () => {
-//     try {
-//       const response = await axios.get(
-//         `http://localhost:3000/short-links/${id}`,
-//         {
-//           withCredentials: true,
-//         }
-//       );
-//       const { originalUrl, shortCode, isSingleUse } = response.data;
-
-//       // Update the formData state with the fetched data
-//       setFormData({
-//         originalUrl: originalUrl || "",
-//         customShortlink: shortCode || "",
-//         isSingleUse: isSingleUse || false,
-//       });
-//     } catch (error) {
-//       ToastFail(
-//         error.response?.status || "An error occurred while fetching data."
-//       );
-//       console.error("Error fetching data:", error);
-//     }
-//   };
-
-//   const handleReset = () => {
-//     setFormData({
-//       originalUrl: "",
-//       customShortlink: "",
-//       isSingleUse: false,
-//     });
-//     setErrors({});
-//     setShortenedData(null);
-//   };
-
-//   const handleChange = (e) => {
-//     const { name, value, type, checked } = e.target;
-//     setFormData({
-//       ...formData,
-//       [name]: type === "checkbox" ? checked : value,
-//     });
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault(); // Prevent default form behavior
-//     // Prepare data for the API
-//     const data = {
-//       userId: "",
-//       originalUrl: formData.originalUrl,
-//       shortCode: formData.customShortlink,
-//       visitCount: 0,
-//       isSingleUse: formData.isSingleUse,
-//       isUsed: false,
-//     };
-
-//     try {
-//       // Make the API call
-//       const response = await axios.put(
-//         `http://localhost:3000/short-links/${id}`,
-//         data,
-//         {
-//           withCredentials: true, // Handle credentials (cookies, etc.)
-//         }
-//       );
-//       console.log(response.status);
-//       if (response.status === 200) {
-//         // Set shortened link data
-//         setShortenedData({
-//           link:
-//             import.meta.env.VITE_SERVERURL +
-//             "/lnk/" +
-//             response.data.shortCode,
-//         });
-//         ToastSuccess("Success! The link has been shortened.");
-//       }
-
-//       // Clear errors after successful submission
-//       setErrors({});
-//     } catch (error) {
-//       // Handle API errors
-//       ToastFail(error.response?.status || "An error occurred.");
-//       console.error("Error submitting data:", error);
-//     }
-//   };
-//   return (
-//     <div className="bg-gray-50 dark:bg-gray-900 py-10 px-4">
-//       <div className="w-full max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-//         <h4 className="text-xl font-bold mb-6 text-gray-900 dark:text-white text-right">
-//           Create New Short Link
-//         </h4>
-//         <form onSubmit={handleSubmit} className="space-y-6">
-//           {/* Original URL Input */}
-//           <div>
-//             <label
-//               htmlFor="originalUrl"
-//               className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-//             >
-//               Original URL
-//             </label>
-//             <input
-//               type="url"
-//               id="originalUrl"
-//               name="originalUrl"
-//               placeholder="https://example.com"
-//               value={formData.originalUrl}
-//               onChange={handleChange}
-//               className={`block w-full px-4 py-2 text-sm border ${
-//                 errors.originalUrl
-//                   ? "border-red-500"
-//                   : "border-gray-300 focus:border-blue-500"
-//               } rounded-lg focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white`}
-//             />
-//             {errors.originalUrl && (
-//               <span className="text-red-500 text-sm">{errors.originalUrl}</span>
-//             )}
-//           </div>
-
-//           {/* Custom Shortlink Input */}
-//           <div>
-//             <label
-//               htmlFor="customShortlink"
-//               className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-//             >
-//               Custom Shortlink (Optional)
-//             </label>
-//             <input
-//               type="text"
-//               id="customShortlink"
-//               name="customShortlink"
-//               placeholder="your-custom-link"
-//               value={formData.customShortlink}
-//               onChange={handleChange}
-//               className={`block w-full px-4 py-2 text-sm border ${
-//                 errors.customShortlink
-//                   ? "border-red-500"
-//                   : "border-gray-300 focus:border-blue-500"
-//               } rounded-lg focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white`}
-//             />
-//             {errors.customShortlink && (
-//               <span className="text-red-500 text-sm">
-//                 {errors.customShortlink}
-//               </span>
-//             )}
-//           </div>
-
-//           {/* Single Use Checkbox */}
-//           <div className="flex items-center">
-//             <input
-//               id="isSingleUse"
-//               name="isSingleUse"
-//               type="checkbox"
-//               checked={formData.isSingleUse}
-//               onChange={handleChange}
-//               className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600"
-//             />
-//             <label
-//               htmlFor="isSingleUse"
-//               className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-//             >
-//               Make it single use
-//             </label>
-//           </div>
-
-//           {/* Submit Button */}
-//           <div className="flex justify-end gap-2">
-//             <button
-//               onClick={handleReset}
-//               type="button"
-//               className="px-6 py-2 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800"
-//             >
-//               Reset
-//             </button>
-//             <button
-//               type="submit"
-//               className="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
-//             >
-//               Edit
-//             </button>
-//           </div>
-//         </form>
-
-//         {/* Conditionally Render ShortenedLink */}
-//         {shortenedData && (
-//           <div className="mt-8">
-//             <ShortenedLink
-//               link={shortenedData.link}
-//               qrCode={shortenedData.qrCode}
-//             />
-//           </div>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ShortLinkEditForm;
-
-
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
+import PersianDatePicker from "../PersianDatePicker";
 import axios from "axios";
-import ShortenedLink from "./shortendLink";
-import { ToastSuccess, ToastFail } from "../Toast/ToastAlert";
+import { ToastSuccess, ToastFail, ToastConfilict } from "../Toast/ToastAlert";
+import ShortenedTimeLink from "../TimeLink/ShortenedTimeLink";
 import { useParams } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
-const ShortLinkEditForm = () => {
+const TimeLinkEditForm = () => {
   const { id } = useParams();
-  const originalUrlRef = useRef(null);
-  const customShortlinkRef = useRef(null);
-  const isSingleUseRef = useRef(null);
-  const [shortenedData, setShortenedData] = useState(null); // State for shortened data
-  const [errors, setErrors] = useState({}); // Validation errors
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    originalUrl: "",
+    shortCode: "",
+    isSingleUse: false,
+    expirationDate: new Date(),
+    createdAt: null, // Set by PersianDatePicker
+  });
 
   useEffect(() => {
-    fetchShortLink();
+    fetchSecureLink();
   }, []);
 
-  const fetchShortLink = async () => {
+
+  const fetchSecureLink = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/short-links/${id}`,
-        { withCredentials: true }
+        `http://localhost:3000/time-links/${id}`,
+        {
+          withCredentials: true,
+        }
       );
-      const { originalUrl, shortCode, isSingleUse } = response.data;
+      const { originalUrl, shortCode, isSingleUse, expirationDate } = response.data;
 
-      // Populate the form inputs
-      if (originalUrlRef.current) originalUrlRef.current.value = originalUrl || "";
-      if (customShortlinkRef.current) customShortlinkRef.current.value = shortCode || "";
-      if (isSingleUseRef.current) isSingleUseRef.current.checked = isSingleUse || false;
+      // Update the formData state with the fetched data
+      setFormData({
+        originalUrl: originalUrl || "",
+        shortCode: shortCode || "",
+        isSingleUse: isSingleUse || false,
+        expirationDate: expirationDate || ""
+      });
     } catch (error) {
       ToastFail(
         error.response?.status || "An error occurred while fetching data."
@@ -253,153 +48,220 @@ const ShortLinkEditForm = () => {
     }
   };
 
+  const [errors, setErrors] = useState({}); // Tracks validation errors for each field
+  const [shortenedData, setShortenedData] = useState(null); // Manage the visibility of ShortenedLink
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+  const handleDateChange = (selectedDate) => {
+    setFormData({ ...formData, expirationDate: new Date(selectedDate) });
+  };
+
+  const validateFields = () => {
+    const errors = {};
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0; // Return true if no errors
+  };
   const handleReset = () => {
-    if (originalUrlRef.current) originalUrlRef.current.value = "";
-    if (customShortlinkRef.current) customShortlinkRef.current.value = "";
-    if (isSingleUseRef.current) isSingleUseRef.current.checked = false;
+    setFormData({
+      originalUrl: "",
+      shortCode: "",
+      isSingleUse: false,
+      expirationDate: "",
+      createdAt: null, // Set by PersianDatePicker
+    });
     setErrors({});
     setShortenedData(null);
   };
-
-  const validateInputs = () => {
-    const validationErrors = {};
-    const originalUrl = originalUrlRef.current?.value;
-    const customShortlink = customShortlinkRef.current?.value;
-
-    // Validate Original URL
-    if (!originalUrl) {
-      validationErrors.originalUrl = "Original URL is required.";
-    } else {
-      try {
-        new URL(originalUrl); // Check if it's a valid URL
-      } catch {
-        validationErrors.originalUrl = "Please enter a valid URL.";
-      }
-    }
-
-    // Validate Custom Shortlink
-    if (customShortlink) {
-      if (!/^[a-zA-Z0-9-_]+$/.test(customShortlink)) {
-        validationErrors.customShortlink =
-          "Custom shortlink can only contain letters, numbers, '-' and '_'.";
-      } else if (customShortlink.length > 30) {
-        validationErrors.customShortlink =
-          "Custom shortlink cannot exceed 30 characters.";
-      }
-    }
-
-    setErrors(validationErrors);
-    return Object.keys(validationErrors).length === 0; // Return true if no errors
-  };
-
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form behavior
+    e.preventDefault();
 
-    if (!validateInputs()) return; // Exit if validation fails
+    if (formData.expirationDate == "") {
+    }
 
-    // Prepare data for the API
-    const data = {
-      userId: "",
-      originalUrl: originalUrlRef.current?.value,
-      shortCode: customShortlinkRef.current?.value,
-      visitCount: 0,
-      isSingleUse: isSingleUseRef.current?.checked,
-      isUsed: false,
-    };
+    if (validateFields()) {
+      const data = {
+        userId: "",
+        originalUrl: formData.originalUrl,
+        shortCode: formData.shortCode,
+        visitCount: 0,
+        isSingleUse: formData.isSingleUse,
+        expirationDate: formData.expirationDate
+          ? new Date(formData.expirationDate).toISOString()
+          : null,
+        isUsed: false,
+      };
+      try {
+        const response = await axios
+          .put(`http://localhost:3000/time-links/${id}`, data, {
+            withCredentials: true,
+          })
+          .catch((error) => {
+            switch (error.status) {
+              case 409: {
+                ToastConfilict(error.message);
+                break;
+              }
+              case 400: {
+                ToastFail(error.message);
+                break;
+              }
+            }
+          });
 
-    try {
-      // Make the API call
-      const response = await axios.put(
-        `http://localhost:3000/short-links/${id}`,
-        data,
-        {
-          withCredentials: true, // Handle credentials (cookies, etc.)
-        }
-      );
-
-      if (response.status === 200) {
-        // Update shortened link data
         setShortenedData({
           link:
             import.meta.env.VITE_SERVERURL +
-            "/lnk/" +
+            "/tlnk/" +
             response.data.shortCode,
         });
-        ToastSuccess("Success! The link has been updated.");
+        ToastSuccess("Success! The link has been created.");
+
+        setErrors({});
+      } catch (error) {
+        // if (error.response) {
+        //   ToastFail(error.response.message); // Access response status safely
+        //   console.error("Error submitting data:", error.response);
+        // } else {
+        //   ToastFail("An unexpected error occurred"); // Handle undefined response
+        //   console.error("Error:", error.message);
+        // }
       }
-    } catch (error) {
-      // Handle API errors
-      ToastFail(error.response?.status || "An error occurred.");
-      console.error("Error submitting data:", error);
     }
   };
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 py-10 px-4">
       <div className="w-full max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-        <h4 className="text-xl font-bold mb-6 text-gray-900 dark:text-white text-right">
-          Edit Short Link
-        </h4>
+      <div className="flex flex-row justify-between">
+          <h4 className="text-xl font-bold mb-6 text-gray-900 dark:text-white text-left">
+            Edit Short Link
+          </h4>
+          <div>
+            <button
+              onClick={() => navigate('/short-link-list')}
+              type="submit"
+              className="px-6 py-2 text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+            >
+              list
+            </button>
+          </div>
+
+
+        </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Original URL Input */}
-          <div>
+          <div className="flex flex-col gap-4">
             <label
-              htmlFor="originalUrl"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              htmlFor="original-url"
+              className="sm:w-1/4 text-sm font-medium text-gray-700 dark:text-gray-300"
             >
               Original URL <span className="text-red-600 text-lg">*</span>
             </label>
             <input
               type="url"
-              id="originalUrl"
+              id="original-url"
               name="originalUrl"
+              value={formData.originalUrl}
+              onChange={handleChange}
               placeholder="https://example.com"
-              ref={originalUrlRef}
-              className={`block w-full px-4 py-2 text-sm border ${
-                errors.originalUrl
-                  ? "border-red-500"
-                  : "border-gray-300 focus:border-blue-500"
-              } rounded-lg focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white`}
+              required
+              className="flex-1 block w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             />
-            {errors.originalUrl && (
-              <span className="text-red-500 text-sm">{errors.originalUrl}</span>
-            )}
           </div>
 
           {/* Custom Shortlink Input */}
-          <div>
+          <div className="flex flex-col gap-4">
             <label
-              htmlFor="customShortlink"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              htmlFor="shortlink"
+              className="sm:w-1/4 text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Custom Shortlink (Optional)
+              Custom Shortlink
             </label>
             <input
               type="text"
-              id="customShortlink"
-              name="customShortlink"
+              id="shortlink"
+              name="shortCode"
+              value={formData.shortCode}
+              onChange={handleChange}
               placeholder="your-custom-link"
-              ref={customShortlinkRef}
-              className={`block w-full px-4 py-2 text-sm border ${
-                errors.customShortlink
-                  ? "border-red-500"
-                  : "border-gray-300 focus:border-blue-500"
-              } rounded-lg focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white`}
+              className="flex-1 block w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             />
-            {errors.customShortlink && (
-              <span className="text-red-500 text-sm">
-                {errors.customShortlink}
-              </span>
+            {errors.shortCode && (
+              <p className="text-sm text-red-500">{errors.shortCode}</p>
             )}
           </div>
 
+          {/* Password Input */}
+          <div className="flex flex-col gap-4">
+            <label
+              htmlFor="password"
+              className="sm:w-1/4 text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Password <span className="text-red-600 text-lg">*</span>
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter password"
+              required
+              className="flex-1 block w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            />
+            {errors.password && (
+              <p className="text-sm text-red-500">{errors.password}</p>
+            )}
+          </div>
+
+          {/* Confirm Password Input */}
+          <div className="flex flex-col gap-4">
+            <label
+              htmlFor="confirmPassword"
+              className="sm:w-1/4 text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Confirm Password <span className="text-red-600 text-lg">*</span>
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Re-enter password"
+              required
+              className="flex-1 block w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+            />
+            {errors.confirmPassword && (
+              <p className="text-sm text-red-500">{errors.confirmPassword}</p>
+            )}
+          </div>
+
+          {/* Custom DateTime Picker Input */}
+          <div className="flex flex-col gap-4">
+            <label
+              htmlFor="createdAt"
+              className="sm:w-1/4 text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Date-Time
+            </label>
+            <PersianDatePicker
+              selectedDate={formData.expirationDate} // Pass the selected date state
+              onDateChange={handleDateChange} // Handle date change
+            />
+          </div>
           {/* Single Use Checkbox */}
           <div className="flex items-center">
             <input
               id="isSingleUse"
               name="isSingleUse"
               type="checkbox"
-              ref={isSingleUseRef}
+              checked={formData.isSingleUse}
+              onChange={handleChange}
               className="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600"
             />
             <label
@@ -409,29 +271,27 @@ const ShortLinkEditForm = () => {
               Make it single use
             </label>
           </div>
-
-          {/* Submit and Reset Buttons */}
+          {/* Submit Button */}
           <div className="flex justify-end gap-2">
             <button
               onClick={handleReset}
               type="button"
               className="px-6 py-2 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800"
             >
-              Reset
+              reset
             </button>
             <button
               type="submit"
               className="px-6 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
             >
-              Edit
+              Create
             </button>
           </div>
         </form>
-
         {/* Conditionally Render ShortenedLink */}
         {shortenedData && (
           <div className="mt-8">
-            <ShortenedLink
+            <ShortenedTimeLink
               link={shortenedData.link}
               qrCode={shortenedData.qrCode}
             />
@@ -442,4 +302,4 @@ const ShortLinkEditForm = () => {
   );
 };
 
-export default ShortLinkEditForm;
+export default TimeLinkEditForm;

@@ -4,8 +4,10 @@ import axios from "axios";
 import { ToastSuccess, ToastFail, ToastConfilict } from "../Toast/ToastAlert";
 import ShortenedPasswordLink from "./shortendSecureLink";
 import { useParams } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 const SecureLinkEditForm = () => {
+
+  const navigate = useNavigate();
   const { id } = useParams();
   const [formData, setFormData] = useState({
     originalUrl: "",
@@ -13,7 +15,7 @@ const SecureLinkEditForm = () => {
     password: "",
     confirmPassword: "",
     isSingleUse: false,
-    expirationDate: new Date(),
+    expirationDate: "",
     createdAt: null, // Set by PersianDatePicker
   });
 
@@ -37,7 +39,7 @@ const SecureLinkEditForm = () => {
         originalUrl: originalUrl || "",
         shortCode: shortCode || "",
         isSingleUse: isSingleUse || false,
-        expirationDate: expirationDate || ""
+        expirationDate: new Date(expirationDate) || ""
       });
     } catch (error) {
       ToastFail(
@@ -55,7 +57,8 @@ const SecureLinkEditForm = () => {
     setFormData({ ...formData, [name]: value });
   };
   const handleDateChange = (selectedDate) => {
-    setFormData({ ...formData, expirationDate: selectedDate });
+    console.log(selectedDate)
+    setFormData({ ...formData, expirationDate: new Date(selectedDate) });
   };
 
   const validateFields = () => {
@@ -120,7 +123,7 @@ const SecureLinkEditForm = () => {
             "/slnk/" +
             response.data.shortCode,
         });
-        ToastSuccess("Success! The link has been created.");
+        ToastSuccess("Success! The link has been edited.");
 
         setErrors({});
       } catch (error) {
@@ -138,9 +141,22 @@ const SecureLinkEditForm = () => {
   return (
     <div className="bg-gray-50 dark:bg-gray-900 py-10 px-4">
       <div className="w-full max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-        <h4 className="text-xl font-bold mb-6 text-gray-900 dark:text-white text-left">
-          Create New secure Link
-        </h4>
+        <div className="flex flex-row justify-between">
+          <h4 className="text-xl font-bold mb-6 text-gray-900 dark:text-white text-left">
+            Edit Secure Link
+          </h4>
+          <div>
+            <button
+              onClick={() => navigate('/secure-link-list')}
+              type="submit"
+              className="px-6 py-2 text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+            >
+              list
+            </button>
+          </div>
+
+
+        </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Original URL Input */}
           <div className="flex flex-col gap-4">

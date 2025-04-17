@@ -123,30 +123,13 @@ const CustomHamburgerMenu = () => {
             <li>
               <a
                 href="#"
-                onClick={() => doNavigate("/short-link-list")}
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                Short-Link-List
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
                 onClick={() => doNavigate("secure-link")}
                 className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
               >
                 Secure-Link
               </a>
             </li>
-            <li>
-              <a
-                href="#"
-                onClick={() => doNavigate("/secure-link-list")}
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                Secure-Link-List
-              </a>
-            </li>
+
             <li>
               <a
                 onClick={() => doNavigate("time-link")}
@@ -156,16 +139,9 @@ const CustomHamburgerMenu = () => {
                 Timed_Link
               </a>
             </li>
+            {/* Divider */}
+            <hr className="my-2 border-gray-300 dark:border-gray-600" />
 
-            <li>
-              <a
-                onClick={() => doNavigate("/time-link-list")}
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
-              >
-                Timed_Link_List
-              </a>
-            </li>
             <li>
               <a
                 onClick={() => doNavigate("about")}
@@ -195,6 +171,9 @@ const CustomHamburgerMenu = () => {
 
 
             </li>
+            {/* Divider */}
+            <hr className="my-2 border-gray-300 dark:border-gray-600" />
+
             <li>
               <a
                 onClick={() => { auth.logout(); setIsOpen(false); }}

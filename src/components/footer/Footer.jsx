@@ -25,7 +25,7 @@ const FooterSection = () => {
           {/* Logo and Branding */}
           <div className="flex justify-end items-center mb-8">
             <img
-              src="/logo.jpeg" // Replace with actual image path
+              src="/link-svgrepo-com.svg" // Replace with actual image path
               alt="Company Icon"
               className="h-14 w-14 ml-4 rounded-full border border-gray-300 shadow-md"
             />
