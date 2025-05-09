@@ -139,6 +139,16 @@ const CustomHamburgerMenu = () => {
                 Timed_Link
               </a>
             </li>
+
+            <li>
+              <a
+                onClick={() => doNavigate("charts")}
+                href="#"
+                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              >
+                Charts
+              </a>
+            </li>
             {/* Divider */}
             <hr className="my-2 border-gray-300 dark:border-gray-600" />
 

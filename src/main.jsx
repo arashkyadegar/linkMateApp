@@ -28,6 +28,7 @@ import { UserProvider } from "./components/context/usercontext";
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import store, { persistor } from './components/redux/store';
+import ChartsList from "./components/charts/charts";
 
 
 createRoot(document.getElementById("root")).render(
@@ -55,6 +56,16 @@ createRoot(document.getElementById("root")).render(
                   <Route path="/login" element={<LoginPage />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/short-link" element={<ShortLinkCreateForm />} />
+
+                  <Route
+                    path="/charts/:id"
+                    element={
+                      <ProtectedRoute>
+                        <ChartsList />
+                      </ProtectedRoute>
+                    }
+                  />
+
 
                   <Route
                     path="/short-link/:id"

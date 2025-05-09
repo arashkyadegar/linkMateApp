@@ -49,6 +49,7 @@ const ShortLinkList = () => {
   const visitOne = async (id) => {
     window.open(`http://localhost:3000/lnk/${id}`, "_blank");
   }
+
   const deleteOne = async (id) => {
     if (confirm("delete?")) {
       try {
@@ -66,7 +67,9 @@ const ShortLinkList = () => {
       }
     }
   };
-
+  const showCharts = async (id) => {
+    navigate(`/charts/${id}`);
+  }
   return (
     <div className="bg-gray-50 dark:bg-gray-900 py-10 px-4" dir="rtl">
       <div className="w-full max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -79,6 +82,7 @@ const ShortLinkList = () => {
             deleteOne={deleteOne}
             editOne={editOne}
             visitOne={visitOne}
+            showCharts={showCharts}
           />
           <div className="flex flex-row-reverse gap-2 justify-center mt-6">
             <PaginationComponent

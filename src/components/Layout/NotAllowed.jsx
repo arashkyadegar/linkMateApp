@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 export default function NotAllowed() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-md max-w-md text-center">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+      <div className="bg-red-100 dark:bg-red-800 border border-red-400 text-red-700 dark:text-red-200 px-4 py-3 rounded-lg shadow-md max-w-md text-center">
         <h1 className="text-lg font-bold">Access Denied</h1>
         <p className="mt-2">You must 
         <span>
